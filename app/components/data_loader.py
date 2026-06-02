@@ -3,7 +3,7 @@ import os
 from functools import lru_cache
 
 # Obtenir le chemin absolu du répertoire racine du projet
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 @lru_cache
 def load_all_participations():

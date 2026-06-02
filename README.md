@@ -56,7 +56,7 @@ YPerf est une start-up fictive qui anticipe les tendances et performances sporti
 Lancer l'application Streamlit :
 
 ```bash
-streamlit run app.py
+streamlit run app/app.py
 ```
 
 Le navigateur s'ouvre automatiquement sur `http://localhost:8501`. Utilisez la barre latérale pour naviguer entre les pages et appliquer des filtres.
@@ -73,23 +73,29 @@ Le navigateur s'ouvre automatiquement sur `http://localhost:8501`. Utilisez la b
 
 ```
 .
-├── app.py                          # Configuration et page d'accueil
-├── requirements.txt                # Dépendances Python
-├── README.md                       # Ce fichier
+├── app/                            # Application Streamlit
+│   ├── app.py                      # Configuration et page d'accueil
+│   ├── __init__.py
+│   ├── components/                 # Modules partagés
+│   │   ├── data_loader.py          # Chargement et cache des données
+│   │   ├── filters.py              # Filtres communs (sidebar)
+│   │   └── predictor.py            # Modèles de prédiction
+│   ├── pages/                      # Pages de l'application
+│   │   ├── 1_Exploration.py
+│   │   ├── 2_Visualisations.py
+│   │   ├── 3_Predictions.py
+│   │   └── 4_Apropos.py
+│   ├── utils/                      # Utilitaires divers (à compléter)
+│   └── .streamlit/                 # Configuration Streamlit
+│       └── config.toml
 ├── cleaned_data/                   # Données fournies (CSV)
 │   ├── all_participations.csv
 │   ├── athletism_completed.csv
 │   └── swimming.csv
-├── pages/                          # Pages de l'application
-│   ├── 1_🔍_Exploration.py
-│   ├── 2_📈_Visualisations.py
-│   ├── 3_🔮_Predictions.py
-│   └── 4_ℹ️_À_propos.py
-├── components/                     # Modules partagés
-│   ├── data_loader.py             # Chargement et cache des données
-│   ├── filters.py                 # Filtres communs (sidebar)
-│   └── predictor.py               # Modèles de prédiction
-└── utils/                          # Utilitaires divers (à compléter)
+├── raw_data/                       # Données brutes (optionnel)
+├── requirements.txt                # Dépendances Python
+├── README.md                       # Ce fichier
+└── .gitignore                      # Fichiers ignorés par Git
 ```
 
 ## Livrables
