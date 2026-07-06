@@ -8,17 +8,17 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 @st.cache_data
 def load_all_participations():
     """Charge les données de toutes les participations."""
-    return pd.read_csv(os.path.join(PROJECT_ROOT, 'cleaned_data', 'all_participations.csv'), on_bad_lines='warn')
+    return pd.read_csv(os.path.join(PROJECT_ROOT, 'data', '2-cleaned_data', 'all_participations.csv'), on_bad_lines='warn')
 
 @st.cache_data
 def load_athletism():
     """Charge les données d'athlétisme."""
-    return pd.read_csv(os.path.join(PROJECT_ROOT, 'cleaned_data', 'athletism_completed.csv'), on_bad_lines='warn')
+    return pd.read_csv(os.path.join(PROJECT_ROOT, 'data', '2-cleaned_data', 'athletism_completed.csv'), on_bad_lines='warn')
 
 @st.cache_data
 def load_swimming():
     """Charge les données de natation."""
-    return pd.read_csv(os.path.join(PROJECT_ROOT, 'cleaned_data', 'swimming.csv'), on_bad_lines='warn')
+    return pd.read_csv(os.path.join(PROJECT_ROOT, 'data', '2-cleaned_data', 'swimming.csv'), on_bad_lines='warn')
 
 def get_available_columns():
     """Retourne les colonnes disponibles dans le DataFrame principal."""
