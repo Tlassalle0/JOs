@@ -21,7 +21,8 @@ YPerf est une start-up fictive qui anticipe les tendances et performances sporti
 
 - **Exploration** : navigation interactive dans les données avec filtres (pays, années, disciplines, médailles, genre)
 - **Visualisations** : graphiques interactifs (barres, lignes, camemberts, boîtes à moustaches) pour analyser les tendances
-- **Prédictions** : modèles de régression linéaire pour prédire les performances 2028 et identifier les pays et athlètes prometteurs
+- **Prédictions** : modèle de régression linéaire pour prédire les médailles par pays et identifier les athlètes prometteurs
+- **Prédictions Natation** : modèle CatBoost pour prédire les temps de natation (nécessite le modèle entraîné)
 - **Documentation intégrée** : page À propos avec le manuel d'utilisation
 
 ## Prérequis
@@ -29,6 +30,7 @@ YPerf est une start-up fictive qui anticipe les tendances et performances sporti
 - Python 3.8 ou supérieur
 - pip (gestionnaire de paquets)
 - Accès au dossier `cleaned_data/` contenant les CSV : `all_participations.csv`, `athletism_completed.csv`, `swimming.csv`
+- Pour la prédiction en natation : `catboost` (facultatif si vous n'utilisez pas cette page)
 
 ## Installation
 
@@ -64,9 +66,9 @@ Le navigateur s'ouvre automatiquement sur `http://localhost:8501`. Utilisez la b
 ### Pages disponibles
 
 - **Accueil** : présentation du projet et vue d'ensemble des données
-- **Exploration** : tableau de données avec filtres et téléchargement CSV
-- **Visualisations** : graphiques interactifs par thématique
-- **Prédictions** : modèles de prédiction pour 2028, classement des pays et athlètes
+- **Visualisations** : tableau de bord analytique avec onglets (Pays, Temporel, Disciplines, Genre, Athlètes, Natation, Athlétisme, Prédictions, Exploration)
+- **Prédictions** : modèle de régression linéaire pour les médailles par pays et analyse des athlètes
+- **Natation** : prédiction des temps de natation avec CatBoost (modèle à entraîner séparément)
 - **À propos** : documentation technique et manuel d'installation
 
 ## Structure du projet
@@ -79,12 +81,14 @@ Le navigateur s'ouvre automatiquement sur `http://localhost:8501`. Utilisez la b
 │   ├── components/                 # Modules partagés
 │   │   ├── data_loader.py          # Chargement et cache des données
 │   │   ├── filters.py              # Filtres communs (sidebar)
-│   │   └── predictor.py            # Modèles de prédiction
+│   │   ├── predictor.py            # Modèles de prédiction (médailles)
+│   │   └── swimming_predictor.py   # Modèle CatBoost pour la natation
 │   ├── pages/                      # Pages de l'application
 │   │   ├── 1_Exploration.py
 │   │   ├── 2_Visualisations.py
 │   │   ├── 3_Predictions.py
-│   │   └── 4_Apropos.py
+│   │   ├── 4_Apropos.py
+│   │   └── 5_Swimming.py
 │   ├── utils/                      # Utilitaires divers (à compléter)
 │   └── .streamlit/                 # Configuration Streamlit
 │       └── config.toml
@@ -93,6 +97,9 @@ Le navigateur s'ouvre automatiquement sur `http://localhost:8501`. Utilisez la b
 │   ├── athletism_completed.csv
 │   └── swimming.csv
 ├── raw_data/                       # Données brutes (optionnel)
+├── model/                          # Modèles entraînés
+│   ├── swimming_model.cbm          # Modèle CatBoost pour la natation (à générer)
+│   └── swimming_prediction.ipynb   # Notebook d'entraînement
 ├── requirements.txt                # Dépendances Python
 ├── README.md                       # Ce fichier
 └── .gitignore                      # Fichiers ignorés par Git
@@ -109,8 +116,9 @@ Le navigateur s'ouvre automatiquement sur `http://localhost:8501`. Utilisez la b
 
 - Les données doivent être placées dans le dossier `cleaned_data/` à la racine du projet.
 - Certaines visualisations nécessitent des colonnes spécifiques (Country, Year, Medal, Discipline, Age, Name, Gender). Assurez-vous que vos données les contiennent.
-- Les modèles de prédiction sont simples (régression linéaire) et peuvent être améliorés.
+- Les modèles de prédiction pour les médailles utilisent une régression linéaire simple et peuvent être améliorés.
+- Le modèle de prédiction de natation (CatBoost) doit être entraîné au préalable en exécutant le notebook `model/swimming_prediction.ipynb` et en sauvegardant le modèle sous `model/swimming_model.cbm`.
 
 ## Licence
 
-Projet éducatif - YNov Bordeaux
+Projet éducatif - Ynov Lyon
