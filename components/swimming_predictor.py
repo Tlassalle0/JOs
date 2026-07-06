@@ -59,3 +59,45 @@ def get_swimming_data():
     """Charge les données de natation nettoyées."""
     from .data_loader import load_swimming
     return load_swimming()
+
+
+def predict_top_ten(model, df, distance, stroke):
+    """
+    Prédit le top 10 pour une épreuve donnée (distance + stroke).
+    Garde le dernier race de chaque athlète, prédit pour 2028,
+    garde le plus rapide par équipe, retourne le top 10.
+    """
+    if model is None or df.empty:
+        return pd.DataFrame()
+
+    features = get_swimming_features()
+
+    # Garder le dernier race de chaque athlète
+    future = (
+        df.sort_values("Year")
+          .groupby("Athlete")
+          .tail(1)
+          .copy()
+    )
+
+    # Prédire pour 2028
+    future["Year"] = 2028
+
+    # Filtrer par distance et stroke
+    subset = future[
+        (future["Distance"] == distance) &
+        (future["Stroke"] == stroke)
+    ].copy()
+
+    if subset.empty:
+        return pd.DataFrame()
+
+    subset["Predicted_Time"] = model.predict(subset[features])
+
+    # Garder le plus rapide par équipe
+    subset = (
+        subset.sort_values("Predicted_Time")
+              .drop_duplicates(subset="Team", keep="first")
+    )
+
+    return subset.head(10)[["Athlete", "Team", "Predicted_Time"]]

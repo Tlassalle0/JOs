@@ -1,92 +1,94 @@
 import streamlit as st
+from components.style import inject_style, section_header, styled_divider
 
 st.set_page_config(layout="wide")
-st.title("ℹ️ À propos du projet YPerf")
+inject_style()
+st.title("\u2139\ufe0f À propos")
 
 st.markdown(
-    """
-    ## YPerf - Performance Olympique 2028
-
-    YPerf est une application de data storytelling développée dans le cadre d'un projet
-    Fil Rouge. Elle permet d'explorer les performances olympiques historiques et de
-    faire des projections pour les Jeux Olympiques de Los Angeles 2028.
-    """
+    """<div class="hero-banner" style="padding:1.5rem 2rem;">
+        <h1 style="font-size:1.6rem;">YPerf — Performance Olympique 2028</h1>
+        <p>Application de data storytelling développée dans le cadre d'un projet Fil Rouge à Ynov Bordeaux.</p>
+    </div>""",
+    unsafe_allow_html=True,
 )
-
-st.markdown("---")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("📚 Documentation technique")
+    section_header("\U0001f4da Documentation technique")
     st.markdown(
         """
-        ### Structure du projet
-        - `app.py` : Page d'accueil et configuration
-        - `pages/` : Pages de l'application (Exploration, Visualisations, Prédictions)
-        - `components/` : Modules partagés (chargement données, filtres, prédiction)
-        - `utils/` : Fonctions utilitaires (à développer)
-        - `cleaned_data/` : Jeux de données nettoyés (fournis)
+        **Structure du projet**
+        - `app.py` — Point d'entrée Streamlit
+        - `pages/` — Pages de l'application
+        - `components/` — Modules partagés (données, filtres, prédiction, style)
+        - `scripts/` — Scripts de traitement des données
+        - `notebooks/` — Jupyter Notebooks d'analyse
+        - `data/` — Données brutes et nettoyées
+        - `model/` — Artifacts d'entraînement CatBoost
 
-        ### Technologies utilisées
-        - **Streamlit** : Framework pour l'application web interactive
-        - **Pandas** : Manipulation des données
-        - **Plotly** : Graphiques interactifs
-        - **Scikit-learn** : Modèles de prédiction
-        - **Statsmodels** : Analyses statistiques (optionnel)
+        **Technologies**
+        """
+    )
+    techs = ["Streamlit", "Pandas", "Plotly", "Scikit-learn", "CatBoost", "NumPy"]
+    for tech in techs:
+        st.markdown(f'<span class="tech-badge">{tech}</span>', unsafe_allow_html=True)
 
-        ### Workflow
-        1. Acquisition des données (déjà fournies dans `cleaned_data/`)
-        2. Nettoyage et structuration (hors scope de l'appli)
-        3. Analyse exploratoire (page Exploration)
-        4. Visualisation (page Visualisations)
-        5. Modélisation prédictive (page Prédictions)
+    st.markdown("")
+    st.markdown(
+        """
+        **Workflow**
+        1. Acquisition et nettoyage des données
+        2. Analyse exploratoire
+        3. Visualisation interactive
+        4. Modélisation prédictive
+        5. Déploiement Streamlit
         """
     )
 
 with col2:
-    st.subheader("🛠️ Manuel d'installation")
+    section_header("\U0001f6e0\ufe0f Manuel d'installation")
     st.markdown(
         """
-        ### Prérequis
-        - Python 3.8 ou supérieur
-        - pip (gestionnaire de paquets Python)
+        **Prérequis**
+        - Python 3.8+
+        - pip
 
-        ### Installation
+        **Installation**
         ```bash
-        # Cloner le dépôt Git
         git clone <repo-url>
         cd JOs
-
-        # Créer un environnement virtuel (recommandé)
         python -m venv venv
-        venv\\Scripts\\activate  # Windows
-        # source venv/bin/activate  # macOS/Linux
-
-        # Installer les dépendances
+        venv\\Scripts\\activate   # Windows
         pip install -r requirements.txt
         ```
 
-        ### Lancement de l'application
+        **Lancement**
         ```bash
         streamlit run app.py
         ```
-
-        L'application s'ouvre automatiquement dans le navigateur à l'adresse `http://localhost:8501`.
         """
     )
 
-st.markdown("---")
+    st.markdown("")
+    section_header("\U0001f4cb Livrables")
+    st.markdown(
+        """
+        - Dépôt Git avec code et documentation
+        - Jupyter Notebooks retraçant l'analyse
+        - Application Streamlit déployée localement
+        - Documentation technique et manuel d'utilisation
+        """
+    )
 
-st.subheader("📋 Livrables")
+styled_divider()
+
+section_header("\U0001f465 Équipe")
 st.markdown(
-    """
-    - Dépôt Git avec tout le code et la documentation
-    - Jupyter Notebook retraçant la démarche et les analyses
-    - Application de data storytelling déployée localement
-    - Documentation technique du projet et manuel d'installation et d'utilisation
-    """
+    """<div class="info-box">
+    <strong>Projet Fil Rouge — YNov Bordeaux</strong><br>
+    Application de data storytelling pour les Jeux Olympiques de Los Angeles 2028.
+    </div>""",
+    unsafe_allow_html=True,
 )
-
-st.subheader("👥 Équipe")
-st.markdown("Projet Fil Rouge - YNov Bordeaux")

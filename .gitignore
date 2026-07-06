@@ -42,9 +42,9 @@ Thumbs.db
 # Streamlit
 .streamlit/secrets.toml
 
-# Data (les données sont dans cleaned_data/, pas besoin de les versionner)
+# Data
 *.csv
-!cleaned_data/*.csv
+!data/2-cleaned_data/*.csv
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/

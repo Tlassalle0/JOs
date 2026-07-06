@@ -29,7 +29,7 @@ YPerf est une start-up fictive qui anticipe les tendances et performances sporti
 
 - Python 3.8 ou supérieur
 - pip (gestionnaire de paquets)
-- Accès au dossier `cleaned_data/` contenant les CSV : `all_participations.csv`, `athletism_completed.csv`, `swimming.csv`
+- Accès au dossier `data/2-cleaned_data/` contenant les CSV : `all_participations.csv`, `athletism_completed.csv`, `swimming.csv`
 - Pour la prédiction en natation : `catboost` (facultatif si vous n'utilisez pas cette page)
 
 ## Installation
@@ -58,7 +58,7 @@ YPerf est une start-up fictive qui anticipe les tendances et performances sporti
 Lancer l'application Streamlit :
 
 ```bash
-streamlit run app/app.py
+streamlit run app.py
 ```
 
 Le navigateur s'ouvre automatiquement sur `http://localhost:8501`. Utilisez la barre latérale pour naviguer entre les pages et appliquer des filtres.
@@ -75,34 +75,35 @@ Le navigateur s'ouvre automatiquement sur `http://localhost:8501`. Utilisez la b
 
 ```
 .
-├── app/                            # Application Streamlit
-│   ├── app.py                      # Configuration et page d'accueil
-│   ├── __init__.py
-│   ├── components/                 # Modules partagés
-│   │   ├── data_loader.py          # Chargement et cache des données
-│   │   ├── filters.py              # Filtres communs (sidebar)
-│   │   ├── predictor.py            # Modèles de prédiction (médailles)
-│   │   └── swimming_predictor.py   # Modèle CatBoost pour la natation
-│   ├── pages/                      # Pages de l'application
-│   │   ├── 1_Exploration.py
-│   │   ├── 2_Visualisations.py
-│   │   ├── 3_Predictions.py
-│   │   ├── 4_Apropos.py
-│   │   └── 5_Swimming.py
-│   ├── utils/                      # Utilitaires divers (à compléter)
-│   └── .streamlit/                 # Configuration Streamlit
-│       └── config.toml
-├── cleaned_data/                   # Données fournies (CSV)
-│   ├── all_participations.csv
-│   ├── athletism_completed.csv
-│   └── swimming.csv
-├── raw_data/                       # Données brutes (optionnel)
-├── model/                          # Modèles entraînés
-│   ├── swimming_model.cbm          # Modèle CatBoost pour la natation (à générer)
-│   └── swimming_prediction.ipynb   # Notebook d'entraînement
+├── app.py                          # Point d'entrée Streamlit
+├── components/                     # Modules partagés
+│   ├── data_loader.py              # Chargement et cache des données
+│   ├── filters.py                  # Filtres sidebar
+│   ├── predictor.py                # Modèle de prédiction médailles
+│   └── swimming_predictor.py       # Modèle CatBoost natation
+├── pages/                          # Pages Streamlit
+│   ├── 1_Exploration.py
+│   ├── 2_Visualisations.py
+│   ├── 3_Predictions.py
+│   ├── 4_Apropos.py
+│   └── 5_Swimming.py
+├── scripts/                        # Scripts de traitement des données
+│   ├── complete_athletism.py       # Complète les données d'athlétisme
+│   └── list_event.py               # Liste les événements d'athlétisme
+├── notebooks/                      # Jupyter Notebooks
+│   ├── clean.ipynb                 # Nettoyage des données
+│   ├── swimming_data.ipynb         # Visualisation natation
+│   └── swimming_prediction.ipynb   # Entraînement modèle CatBoost
+├── data/
+│   ├── 1-raw_data/                 # Données brutes
+│   └── 2-cleaned_data/             # Données nettoyées (CSV)
+├── model/                          # Artifacts d'entraînement
+│   ├── swimming_model.cbm          # Modèle CatBoost (à générer)
+│   └── catboost_info/
+├── .streamlit/config.toml          # Configuration Streamlit
 ├── requirements.txt                # Dépendances Python
-├── README.md                       # Ce fichier
-└── .gitignore                      # Fichiers ignorés par Git
+├── README.md
+└── .gitignore
 ```
 
 ## Livrables
@@ -114,10 +115,10 @@ Le navigateur s'ouvre automatiquement sur `http://localhost:8501`. Utilisez la b
 
 ## Remarques
 
-- Les données doivent être placées dans le dossier `cleaned_data/` à la racine du projet.
+- Les données doivent être placées dans le dossier `data/2-cleaned_data/` à la racine du projet.
 - Certaines visualisations nécessitent des colonnes spécifiques (Country, Year, Medal, Discipline, Age, Name, Gender). Assurez-vous que vos données les contiennent.
 - Les modèles de prédiction pour les médailles utilisent une régression linéaire simple et peuvent être améliorés.
-- Le modèle de prédiction de natation (CatBoost) doit être entraîné au préalable en exécutant le notebook `model/swimming_prediction.ipynb` et en sauvegardant le modèle sous `model/swimming_model.cbm`.
+- Le modèle de prédiction de natation (CatBoost) doit être entraîné au préalable en exécutant le notebook `notebooks/swimming_prediction.ipynb` et en sauvegardant le modèle sous `model/swimming_model.cbm`.
 
 ## Licence
 
